@@ -31,19 +31,6 @@ local mainView = FlashCard(ui.Bounds(0, 1.2, -2,   1, 0.5, 0.01))
 -- as a subview, sort of like a title bar of a desktop window.
 mainView.grabbable = true
 
--- Create a regular ol' button. Make it 2 dm wide and high, and 1dm deep.
--- The position refers to the center of the button, so it needs to be moved
--- 5cm out of the mainView so that the button lies on top of the surface,
--- instead of embedded inside of it.
-local button = ui.Button(ui.Bounds(0.0, 0.05, 0.05,   0.2, 0.2, 0.1))
-mainView:addSubview(button)
-
--- When user presses the button, print "hello" to the local terminal.
--- Here's where you can make the button do more fun stuff :)
-button.onActivated = function()
-    print("Hello!")
-end
-
 -- It's nice to provide a way to quit the app, too.
 -- Here's also an alternative syntax for setting the size and position of something.
 local quitButton = ui.Button(ui.Bounds{size=ui.Size(0.12,0.12,0.05)}:move( 0.52,0.25,0.025))
