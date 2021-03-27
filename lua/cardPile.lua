@@ -12,13 +12,12 @@ function CardPile:_init(bounds)
   self:super(bounds)
 
   self.PI = 3.141592
+  self.wordList = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten" }
 
   -- BACK SURFACE
   self.deck = Surface(bounds)
   self.deck:setColor({0, 0.6, 0.8, 1})
   self:addSubview(self.deck)
-
-  self:spawnCard()
 
   self:layout()
 end
@@ -27,15 +26,19 @@ function CardPile:specification()
   return ui.View.specification(self)
 end
 
+function CardPile:_getRandomizedWord()
+  local randomIndex = math.random(#self.wordList)
+  return self.wordList[randomIndex]
+end
+
 function CardPile:spawnCard()
-  local card = FlashCard(ui.Bounds(0,0.5,0,   0.4, 0.6, 0.001), "kmwlrkemwr!")
+  local randomWord = self:_getRandomizedWord()
+  local card = FlashCard(ui.Bounds(0,0.5,0,   0.4, 0.6, 0.001), randomWord)
   self:addSubview(card)
 end
 
-function CardPile:onInteraction(inter, body, sender)
-  if body[1] == "poke" then
-    print("CARD GET")
-  end
+function CardPile:onTouchDown(pointer)
+  self:spawnCard()
 end
 
 function CardPile:update()

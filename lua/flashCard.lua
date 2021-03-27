@@ -28,7 +28,6 @@ function FlashCard:_init(bounds, text)
   self.label:setColor({0, 0, 0, 1})
   self.label:setText(text)
   self.label:setFitToWidth(bounds.size.width)
-  print("width: ", bounds.size.width)
   self:addSubview(self.label)
 
   self.grabbable = true
@@ -58,7 +57,6 @@ end
 
 
 function FlashCard:layout()
-  print("Re-layouting")
 
   -- -- Set correct position of all UI elements in relation to the drawableSurface  
   -- self.half_width = self.drawableSurface.bounds.size.width/2
