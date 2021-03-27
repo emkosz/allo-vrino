@@ -1,5 +1,5 @@
 
-local FlashCard = require("flashCard")
+local CardPile = require("cardPile")
 
 -- a Client is used to connect this app to a Place. arg[2] is the URL of the place to
 -- connect to, which Assist sets up for you.
@@ -11,6 +11,8 @@ local client = Client(
 -- App manages the Client connection for you, and manages the lifetime of the
 -- your app.
 local app = App(client)
+
+local PI = 3.141592
 
 -- Assets are files (images, glb models, videos, sounds, etc...) that you want to use
 -- in your app. They need to be published so that user's headsets can download them
@@ -24,7 +26,8 @@ app.assetManager:add(assets)
 -- 0, 1.2, -2 means: put the app centered horizontally; 1.2 meters up from the floor; and 2 meters into the room, depth-wise
 -- 1, 0.5, 0.01 means 1 meter wide, 0.5 meters tall, and 1 cm deep.
 -- It's a surface, so the depth should be close to zero.
-local mainView = FlashCard(ui.Bounds(0, 1.2, -2,   1, 0.5, 0.01))
+local mainView = CardPile(ui.Bounds(0,0,0,  1, 1, 0.001):rotate(PI/2, 1, 0, 0):move(0, 0.01, 0))
+
 
 -- Make it so that the grab button or right mouse button moves lets user move the view.
 -- Instead of making mainView grabbable, you could also create a ui.GrabHandle and add it
