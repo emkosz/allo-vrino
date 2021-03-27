@@ -14,10 +14,16 @@ function CardPile:_init(bounds)
   self.PI = 3.141592
   self.wordList = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten" }
 
-  -- BACK SURFACE
+  -- DECK SURFACE
   self.deck = Surface(bounds)
   self.deck:setColor({0, 0.6, 0.8, 1})
   self:addSubview(self.deck)
+
+  -- CARD HOLDING CONTAINER
+  -- self.cardHolder = Surface(ui.Bounds(0,1,0,   0.4, 0.6, 0.001))
+  -- self.cardHolder:setColor({1, 1, 1, 0.2})
+  -- self:addSubview(self.cardHolder)
+  -- self.cardHolder.hasTransparency = true
 
   self:layout()
 end
@@ -32,9 +38,18 @@ function CardPile:_getRandomizedWord()
 end
 
 function CardPile:spawnCard()
+
+  if (#self.subviews > 1) then
+    self.subviews[2]:removeFromSuperview()
+  end
+
   local randomWord = self:_getRandomizedWord()
   local card = FlashCard(ui.Bounds(0,0.5,0,   0.4, 0.6, 0.001), randomWord)
   self:addSubview(card)
+  
+  --self.cardHolder:addSubview(card)
+
+  self:layout()
 end
 
 function CardPile:onTouchDown(pointer)
@@ -42,9 +57,26 @@ function CardPile:onTouchDown(pointer)
 end
 
 function CardPile:update()
+  print("yikes")
 end
 
 function CardPile:layout()
+  -- self.cardHolder.bounds.size.width = #self.cardHolder.subviews * 0.4 + (#self.cardHolder.subviews + 1) * 0.2
+  -- self.cardHolder:setBounds()
+
+  -- print("self.cardHolder.bounds.size.width", self.cardHolder.bounds.size.width)
+
+  -- for i, card in pairs(self.cardHolder.subviews) do
+  --   print(i)
+  --   print(card.bounds.size.width)
+  --   print(card.bounds.pose.x)
+  --   card.bounds.pose.x = ((i - 1) * 0.4) + 0.1
+
+  --   card:setBounds()
+  -- end
+
+  
+
 end
 
 return CardPile

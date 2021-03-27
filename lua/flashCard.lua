@@ -13,17 +13,17 @@ function FlashCard:_init(bounds, text)
 
 
   -- BACK SURFACE
-  self.backSurface = Surface(bounds)
-  self.backSurface:setColor({0, 1, 0, 1})
+  self.backSurface = Surface(bounds:copy():move(0, 0, -0.001))
+  self.backSurface:setColor({0, 0, 0.4, 1})
   self:addSubview(self.backSurface)
 
   -- FRONT SURFACE
-  self.frontSurface = Surface(bounds:copy():move(0, 0, 0.001))
+  self.frontSurface = Surface(bounds:copy())
   self.frontSurface:setColor({1, 1, 1, 1})
   self:addSubview(self.frontSurface)
 
   -- TEXT LABEL
-  self.label = Label{bounds=bounds:copy():move(0, 0, 0.002)}
+  self.label = Label{bounds=bounds:copy():move(0, 0, 0.001)}
   self.label:setHalign("center")
   self.label:setColor({0, 0, 0, 1})
   self.label:setText(text)
@@ -58,32 +58,6 @@ end
 
 function FlashCard:layout()
 
-  -- -- Set correct position of all UI elements in relation to the drawableSurface  
-  -- self.half_width = self.drawableSurface.bounds.size.width/2
-  -- self.half_height = self.drawableSurface.bounds.size.height/2
-
-  -- self.frame:setBounds(ui.Bounds{
-  --     size= ui.Size(
-  --       self.drawableSurface.bounds.size.width+self.FRAME_THICKNESS*2,
-  --       self.drawableSurface.bounds.size.height+self.FRAME_THICKNESS*2, 
-  --       self.drawableSurface.bounds.size.depth)
-  --     }:move(0,0,-0.001))
-    
-  -- --print("controlPanel width:", self.drawableSurface.bounds.size.width + self.FRAME_THICKNESS*2)
-  -- self.controlPanel:setBounds(ui.Bounds{
-  --   size= ui.Size(
-  --     self.drawableSurface.bounds.size.width + self.FRAME_THICKNESS*2,
-  --     self.BUTTON_SIZE + self.FRAME_THICKNESS*2, 
-  --     0.05)
-  -- }:rotate(-self.PI/4, 1, 0, 0):move(0,-self.half_height-self.BUTTON_SIZE/2-self.FRAME_THICKNESS, self.BUTTON_SIZE/2-self.FRAME_THICKNESS))
-  
-  -- -- Buttons laid out in relation to their parent: the controlPanel
-  -- self.clearButton:setBounds(ui.Bounds{pose=ui.Pose(-self.controlPanel.bounds.size.width/2+self.BUTTON_SIZE/2+self.FRAME_THICKNESS, 0, self.BUTTON_DEPTH/2), size=self.clearButton.bounds.size})
-  -- self.brushSizeDownButton:setBounds(ui.Bounds{pose=ui.Pose(self.controlPanel.bounds.size.width/2-self.BUTTON_SIZE/2-self.BUTTON_SIZE-self.FRAME_THICKNESS-self.SPACING, 0, self.BUTTON_DEPTH/2), size=self.brushSizeDownButton.bounds.size})  
-  -- self.brushSizeUpButton:setBounds(ui.Bounds{pose=ui.Pose(self.controlPanel.bounds.size.width/2-self.BUTTON_SIZE/2-self.FRAME_THICKNESS, 0, self.BUTTON_DEPTH/2), size=self.brushSizeUpButton.bounds.size})
-
-  -- -- Leftovers
-  -- self.quitButton:setBounds(ui.Bounds{pose=ui.Pose(self.half_width - self.SMALL_BUTTON_SIZE/2, self.half_height+self.SPACING + self.SMALL_BUTTON_SIZE/2, self.BUTTON_DEPTH/2), size=self.quitButton.bounds.size})
 end
 
 return FlashCard
