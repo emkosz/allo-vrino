@@ -23,7 +23,8 @@ function FlashCard:_init(bounds)
   self.lable = Label{bounds=Bounds(0, 0, 0, 1, 0.2, 0.01)}
 
   --For convenience, you may also set some or all of the Label's properties within the constructor, i.e.:
-  self.lable = Label{bounds=Bounds(0, 0, 0, 1.0, 0.1, 0.001), color={0.0,0,1}, text="Hello!", halign="left"}
+  self.lable = Label{bounds=Bounds(0, 0, 0, 1.0, 0.1, 0.001), color={0.0,0,1}, text="Hello!"}
+  self.lable:setHalign("center")
   self:addSubview(self.lable)
 
 
