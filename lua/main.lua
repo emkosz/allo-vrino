@@ -1,3 +1,6 @@
+
+local FlashCard = require("flashCard")
+
 -- a Client is used to connect this app to a Place. arg[2] is the URL of the place to
 -- connect to, which Assist sets up for you.
 local client = Client(
@@ -21,7 +24,7 @@ app.assetManager:add(assets)
 -- 0, 1.2, -2 means: put the app centered horizontally; 1.2 meters up from the floor; and 2 meters into the room, depth-wise
 -- 1, 0.5, 0.01 means 1 meter wide, 0.5 meters tall, and 1 cm deep.
 -- It's a surface, so the depth should be close to zero.
-local mainView = ui.Surface(ui.Bounds(0, 1.2, -2,   1, 0.5, 0.01))
+local mainView = FlashCard(ui.Bounds(0, 1.2, -2,   1, 0.5, 0.01))
 
 -- Make it so that the grab button or right mouse button moves lets user move the view.
 -- Instead of making mainView grabbable, you could also create a ui.GrabHandle and add it
