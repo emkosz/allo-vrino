@@ -11,9 +11,20 @@ FlashCard.assets = {
 function FlashCard:_init(bounds)
   self:super(bounds)
 
+  -- -- FRONT SURFACE
+
   self.frontSurface = Surface(ui.Bounds(0, 0, 0, 1, 1, 0.01))
   self.frontSurface:setColor({1, 0, 0, 1})
   self:addSubview(self.frontSurface)
+
+
+  -- -- TEXT LABLE
+  --Creates a Label, at origo, that is 1m wide, 20cm tall and 1cm deep
+  self.lable = Label{bounds=Bounds(0, 0, 0, 1, 0.2, 0.01)}
+
+  --For convenience, you may also set some or all of the Label's properties within the constructor, i.e.:
+  self.lable = Label{bounds=Bounds(0, 0, 0, 1.0, 0.1, 0.001), color={0.0,0,1}, text="Hello!", halign="left"}
+  self:addSubview(self.lable)
 
 
   -- -- QUIT BUTTON
