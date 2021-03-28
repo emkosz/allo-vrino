@@ -15,17 +15,33 @@ function CardPile:_init(bounds)
   self.pictionaryWordList = {"cat","sun","cup", "ghost","flower","pie", "cow","banana","snowflake", "bug","book","jar", "snake","light","tree", "lips","apple","slide", "socks","smile","swing", "coat","shoe","water", "heart","hat","ocean", "kite","dog","mouth", "milk","duck","eyes", "skateboard","bird","boy", "apple","person","girl", "mouse","ball","house", "star","nose","bed", "whale","jacket","shirt", "hippo","beach","egg", "face","cookie","cheese", "ice","cream","cone", "spoon","worm","spider", "bridge","bone","grapes", "bell","jellyfish","bunny", "truck","grass","door", "monkey","spider","bread", "ears","bowl","bracelet", "alligator","bat","clock", "lollipop","moon","doll", "orange","ear","basketball", "bike","airplane","pen", "inchworm","seashell","rocket", "cloud","bear","corn", "chicken","purse","glasses", "blocks","carrot","turtle", "pencil","horse","dinosaur", "head","lamp","snowman", "ant","giraffe","cupcake", "chair","leaf","bunk", "snail","baby","balloon", "bus","cherry","crab", "football","branch","robot"}
 
   self.globalCardControlTable = {}
-
-  -- +======
-  -- | handID : {card, ...}
-  -- |        :
-  -- |        :
   
 
   -- DECK SURFACE
-  self.deck = Surface(bounds)
+  self.deck = Surface(ui.Bounds{size=bounds.size:copy()})
   self.deck:setColor({0.8, 0.4, 0.2, 1})
+  
+  local deckLabel = Label{bounds=ui.Bounds(0, 0.17, 0, self.deck.bounds.size.width, 0.2, 0.001), text="Pictionary Flash Cards"}
+  deckLabel:setColor({1, 1, 1, 1})
+  deckLabel:setFitToWidth(self.deck.bounds.size.width)
+  deckLabel:setWrap(false)
+  print("self.deck.bounds.size.width", self.deck.bounds.size.width)
+  self.deck:addSubview(deckLabel)
+
+  local drawCardButton = Button(ui.Bounds(0, 0, 0, 0.8, 0.15, 0.1))
+  drawCardButton.label:setFitToWidth(drawCardButton.bounds.size.width)
+  drawCardButton.label:setText("Draw new card")
+
+  drawCardButton.onActivated = function(hand)
+    print("butan push")
+    self:spawnCard(hand)
+  end
+
+  self.deck:addSubview(drawCardButton)
+
   self:addSubview(self.deck)
+
+
 
   -- CARD HOLDING CONTAINER
   -- self.cardHolder = Surface(ui.Bounds(0,1,0,   0.4, 0.6, 0.001))
@@ -45,9 +61,9 @@ function CardPile:_getRandomizedWord()
   return self.pictionaryWordList[randomIndex]
 end
 
-function CardPile:spawnCard(pointer)
+function CardPile:spawnCard(hand)
   
-  local currentUserCard = self.globalCardControlTable[pointer.hand.id]
+  local currentUserCard = self.globalCardControlTable[hand.id]
   if currentUserCard then
     --remove the current card before creating a new one
     currentUserCard:removeFromSuperview()
@@ -58,17 +74,12 @@ function CardPile:spawnCard(pointer)
   local card = FlashCard(ui.Bounds(0,0.2,0,   0.4, 0.2, 0.001), randomWord)
 
   currentUserCard = card
-  self.globalCardControlTable[pointer.hand.id] = currentUserCard
+  self.globalCardControlTable[hand.id] = currentUserCard
 
   print("currentUserCard", currentUserCard)
-  self.app:openPopupNearHand(card, pointer.hand, 0.2)
+  self.app:openPopupNearHand(card, hand, 0.2)
   
   self:layout()
-end
-
-function CardPile:onTouchDown(pointer)
-  print("touching the pile")
-  self:spawnCard(pointer)
 end
 
 function CardPile:update()
