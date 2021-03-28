@@ -14,6 +14,14 @@ function CardPile:_init(bounds)
   self.PI = 3.141592
   self.wordList = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten" }
 
+  self.userControlTable = {}
+
+  -- +======
+  -- | handID : {card, ...}
+  -- |        :
+  -- |        :
+  
+
   -- DECK SURFACE
   self.deck = Surface(bounds)
   self.deck:setColor({0, 0.6, 0.8, 1})
@@ -37,23 +45,34 @@ function CardPile:_getRandomizedWord()
   return self.wordList[randomIndex]
 end
 
-function CardPile:spawnCard()
 
-  if (#self.subviews > 1) then
-    self.subviews[2]:removeFromSuperview()
-  end
+
+function CardPile:spawnCard(pointer)
+
+  -- for k,v in self.userControlTable do
+  --   if self.userControlTable[k] == pointer.hand.id then
+  --     if v 
+  --   end
+  -- end
+  
+  print(pointer.hand.id)
+
+  -- if (#self.subviews > 1) then
+  --   self.subviews[2]:removeFromSuperview()
+  -- end
 
   local randomWord = self:_getRandomizedWord()
-  local card = FlashCard(ui.Bounds(0,0.5,0,   0.4, 0.6, 0.001), randomWord)
-  self:addSubview(card)
+  local card = FlashCard(ui.Bounds(0,0.2,0,   0.4, 0.2, 0.001), randomWord)
   
-  --self.cardHolder:addSubview(card)
+  self.app:openPopupNearHand(card, pointer.hand, 0.2)
+  
 
   self:layout()
 end
 
 function CardPile:onTouchDown(pointer)
-  self:spawnCard()
+  print("yikers")
+  self:spawnCard(pointer)
 end
 
 function CardPile:update()
