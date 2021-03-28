@@ -13,21 +13,22 @@ function FlashCard:_init(bounds, text)
 
 
   -- BACK SURFACE
-  self.backSurface = Surface(bounds:copy():move(0, 0, -0.001))
+  self.backSurface = Surface(ui.Bounds{size=bounds.size:copy()}:move(0, 0, -0.001))
   self.backSurface:setColor({0, 0, 0.4, 1})
   self:addSubview(self.backSurface)
 
   -- FRONT SURFACE
-  self.frontSurface = Surface(bounds:copy())
+  self.frontSurface = Surface(ui.Bounds{size=bounds.size:copy()})
   self.frontSurface:setColor({1, 1, 1, 1})
   self:addSubview(self.frontSurface)
 
   -- TEXT LABEL
-  self.label = Label{bounds=bounds:copy():move(0, 0, 0.001)}
+  self.label = Label(ui.Bounds{size=bounds.size:copy()}:move(0, 0, -0.001))
   self.label:setHalign("center")
   self.label:setColor({0, 0, 0, 1})
   self.label:setText(text)
   self.label:setFitToWidth(bounds.size.width)
+  self.label:setWrap(false)
   self:addSubview(self.label)
 
   self.grabbable = true

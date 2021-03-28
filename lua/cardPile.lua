@@ -77,7 +77,7 @@ function CardPile:spawnCard(hand)
   self.globalCardControlTable[hand.id] = currentUserCard
 
   print("currentUserCard", currentUserCard)
-  self.app:openPopupNearHand(card, hand, 0.2)
+  self.app:openPopupNearHand(card, hand, 0.3)
   
   self:layout()
 end
