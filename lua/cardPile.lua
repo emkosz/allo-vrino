@@ -12,9 +12,9 @@ function CardPile:_init(bounds)
   self:super(bounds)
 
   self.PI = 3.141592
-  self.wordList = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten" }
+  self.pictionaryWordList = {"cat","sun","cup", "ghost","flower","pie", "cow","banana","snowflake", "bug","book","jar", "snake","light","tree", "lips","apple","slide", "socks","smile","swing", "coat","shoe","water", "heart","hat","ocean", "kite","dog","mouth", "milk","duck","eyes", "skateboard","bird","boy", "apple","person","girl", "mouse","ball","house", "star","nose","bed", "whale","jacket","shirt", "hippo","beach","egg", "face","cookie","cheese", "ice","cream","cone", "spoon","worm","spider", "bridge","bone","grapes", "bell","jellyfish","bunny", "truck","grass","door", "monkey","spider","bread", "ears","bowl","bracelet", "alligator","bat","clock", "lollipop","moon","doll", "orange","ear","basketball", "bike","airplane","pen", "inchworm","seashell","rocket", "cloud","bear","corn", "chicken","purse","glasses", "blocks","carrot","turtle", "pencil","horse","dinosaur", "head","lamp","snowman", "ant","giraffe","cupcake", "chair","leaf","bunk", "snail","baby","balloon", "bus","cherry","crab", "football","branch","robot"}
 
-  self.userControlTable = {}
+  self.globalCardControlTable = {}
 
   -- +======
   -- | handID : {card, ...}
@@ -24,7 +24,7 @@ function CardPile:_init(bounds)
 
   -- DECK SURFACE
   self.deck = Surface(bounds)
-  self.deck:setColor({0, 0.6, 0.8, 1})
+  self.deck:setColor({0.8, 0.4, 0.2, 1})
   self:addSubview(self.deck)
 
   -- CARD HOLDING CONTAINER
@@ -41,42 +41,38 @@ function CardPile:specification()
 end
 
 function CardPile:_getRandomizedWord()
-  local randomIndex = math.random(#self.wordList)
-  return self.wordList[randomIndex]
+  local randomIndex = math.random(#self.pictionaryWordList)
+  return self.pictionaryWordList[randomIndex]
 end
 
-
-
 function CardPile:spawnCard(pointer)
-
-  -- for k,v in self.userControlTable do
-  --   if self.userControlTable[k] == pointer.hand.id then
-  --     if v 
-  --   end
-  -- end
   
-  print(pointer.hand.id)
-
-  -- if (#self.subviews > 1) then
-  --   self.subviews[2]:removeFromSuperview()
-  -- end
-
+  local currentUserCard = self.globalCardControlTable[pointer.hand.id]
+  if currentUserCard then
+    --remove the current card before creating a new one
+    currentUserCard:removeFromSuperview()
+  end
+  
+  -- create a new card
   local randomWord = self:_getRandomizedWord()
   local card = FlashCard(ui.Bounds(0,0.2,0,   0.4, 0.2, 0.001), randomWord)
-  
+
+  currentUserCard = card
+  self.globalCardControlTable[pointer.hand.id] = currentUserCard
+
+  print("currentUserCard", currentUserCard)
   self.app:openPopupNearHand(card, pointer.hand, 0.2)
   
-
   self:layout()
 end
 
 function CardPile:onTouchDown(pointer)
-  print("yikers")
+  print("touching the pile")
   self:spawnCard(pointer)
 end
 
 function CardPile:update()
-  print("yikes")
+  print("CardPile:update()")
 end
 
 function CardPile:layout()
