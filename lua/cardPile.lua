@@ -19,25 +19,33 @@ function CardPile:_init(bounds)
 
   -- DECK SURFACE
   self.deck = Surface(ui.Bounds{size=bounds.size:copy()})
-  self.deck:setColor({0.8, 0.4, 0.2, 1})
+  self.deck:setColor({0.4, 0.4, 0.6, 1})
   
-  local deckLabel = Label{bounds=ui.Bounds(0, 0.17, 0, self.deck.bounds.size.width, 0.2, 0.001), text="Pictionary Flash Cards"}
+  local deckLabel = Label{bounds=ui.Bounds(0, 0.2, 0, self.deck.bounds.size.width, 0.2, 0.001), text="Pictionary Flash Cards"}
   deckLabel:setColor({1, 1, 1, 1})
   deckLabel:setFitToWidth(self.deck.bounds.size.width)
   deckLabel:setWrap(false)
   print("self.deck.bounds.size.width", self.deck.bounds.size.width)
   self.deck:addSubview(deckLabel)
 
-  local drawCardButton = Button(ui.Bounds(0, 0, 0, 0.8, 0.15, 0.1))
+  local drawCardButton = Button(ui.Bounds(0, 0.05, 0, 0.8, 0.15, 0.1))
   drawCardButton.label:setFitToWidth(drawCardButton.bounds.size.width)
   drawCardButton.label:setText("Draw new card")
-
   drawCardButton.onActivated = function(hand)
-    print("butan push")
+    print("drawCardButton pushed")
     self:spawnCard(hand)
   end
-
   self.deck:addSubview(drawCardButton)
+
+  local clearCardsButton = Button(ui.Bounds(0, -0.15, 0, 0.8, 0.15, 0.1))
+  clearCardsButton.label:setFitToWidth(clearCardsButton.bounds.size.width)
+  clearCardsButton.label:setText("Clear all cards")
+  clearCardsButton.onActivated = function(hand)
+    print("clearCardsButton pushed")
+    self:clearAllCards()
+  end
+  self.deck:addSubview(clearCardsButton)
+  
 
   self:addSubview(self.deck)
 
@@ -80,6 +88,16 @@ function CardPile:spawnCard(hand)
   self.app:openPopupNearHand(card, hand, 0.3)
   
   self:layout()
+end
+
+function CardPile:clearAllCards()
+  if self.globalCardControlTable == nil then return end
+
+  for k, v in pairs(self.globalCardControlTable) do
+    v:removeFromSuperview()
+  end
+  self.globalCardControlTable = {}
+
 end
 
 function CardPile:update()

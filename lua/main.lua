@@ -26,7 +26,7 @@ app.assetManager:add(assets)
 -- 0, 1.2, -2 means: put the app centered horizontally; 1.2 meters up from the floor; and 2 meters into the room, depth-wise
 -- 1, 0.5, 0.01 means 1 meter wide, 0.5 meters tall, and 1 cm deep.
 -- It's a surface, so the depth should be close to zero.
-local mainView = CardPile(ui.Bounds(0,1.3,0,  1, 0.5, 0.001))
+local mainView = CardPile(ui.Bounds(0,1.5,0,  1, 0.6, 0.001))
 
 
 -- Make it so that the grab button or right mouse button moves lets user move the view.
