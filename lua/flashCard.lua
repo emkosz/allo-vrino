@@ -14,7 +14,7 @@ function FlashCard:_init(bounds, text)
 
   -- BACK SURFACE
   self.backSurface = Surface(ui.Bounds{size=bounds.size:copy()}:move(0, 0, -0.001))
-  self.backSurface:setColor({0, 0, 0.4, 1})
+  self.backSurface:setColor({0.4, 0.4, 0.6, 1})
   self:addSubview(self.backSurface)
 
   -- FRONT SURFACE

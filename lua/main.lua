@@ -36,7 +36,7 @@ mainView.grabbable = true
 
 -- It's nice to provide a way to quit the app, too.
 -- Here's also an alternative syntax for setting the size and position of something.
-local quitButton = ui.Button(ui.Bounds{size=ui.Size(0.12,0.12,0.05)}:move( 0.52,0.25,0.025))
+local quitButton = ui.Button(ui.Bounds{size=ui.Size(0.12,0.12,0.05)}:move( 0.50,0.25,0.025))
 -- Use our quit texture file as the image for this button.
 quitButton:setDefaultTexture(assets.quit)
 quitButton.onActivated = function()
